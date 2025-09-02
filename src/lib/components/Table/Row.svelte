@@ -26,7 +26,7 @@
 
 {#if rating}
 	<tr class="border-x border-y-0 border-gray-200 bg-slate-800">
-		<td class="whitespace-no-wrap px-6 py-4">
+		<td rowspan="2" class="whitespace-no-wrap px-6 py-4 w-fit">
 			<div class="flex items-center">
 				<div class="h-10 w-10 flex-shrink-0">
 					<a href="https://njump.me/{rating.from.npub}" target="_blank" class="h-full w-full">
@@ -54,7 +54,7 @@
 			</div>
 		</td>
 
-		<td class="whitespace-no-wrap px-6 py-4">
+		<td rowspan="2" class="whitespace-no-wrap px-6 py-4 w-fit">
 			<div class="flex items-center">
 				<div class="h-10 w-10 flex-shrink-0">
 					<a href="https://njump.me/{rating.to.npub}" target="_blank" class="h-full w-full">
@@ -139,18 +139,18 @@
 
 	<tr class="border-x border-b border-gray-200 bg-slate-700">
 		{#if rating.description}
-			<td colspan="6" class="whitespace-no-wrap max-w-fit px-6 py-4">
+			<td colspan="4" class="whitespace-no-wrap max-w-fit w-full">
 				<textarea
 					bind:this={textarea}
 					bind:value={rating.description}
 					class="w-full resize-none border-0"
-					rows="3"
+					rows="2"
 					readonly
 					disabled
 				></textarea>
 
 				{#if rating.description.length > 250}
-					<div class="pt-4 text-center">
+					<div class="text-center">
 						<button class="text-sm text-orange-500 hover:text-white" on:click={toggleExpanded}>
 							{expanded ? 'Collapse' : 'Expand'}
 						</button>
