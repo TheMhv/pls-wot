@@ -130,7 +130,7 @@
 									class="rounded-lg p-2.5 text-sm text-orange-500 transition-colors hover:bg-orange-600 hover:text-white focus:ring-2 focus:ring-orange-300"
 									on:click={() => zapModal.openModal(rating.from.npub, rating.eventId)}
 								>
-									Send Zap
+									Send Tip
 								</button>
 							</div>
 						{/if}

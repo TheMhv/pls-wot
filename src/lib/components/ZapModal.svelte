@@ -130,7 +130,7 @@
 	<div class="relative mx-auto w-full max-w-2xl p-4">
 		<div class="relative rounded-lg bg-gray-700 shadow-xl">
 			<div class="flex items-center justify-between border-b border-gray-600 p-4">
-				<h3 class="text-xl font-semibold text-white">Send Zap</h3>
+				<h3 class="text-xl font-semibold text-white">Send Tip</h3>
 
 				<button
 					type="button"
