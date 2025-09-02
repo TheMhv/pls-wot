@@ -172,14 +172,6 @@
 		replaceState(page.url, page.state);
 	}
 
-	async function copyNpub(npub: string) {
-		await navigator.clipboard.writeText(npub);
-		toasts.success({
-			title: 'Copied NPUB!',
-			description: 'NPUB copied to clipboard'
-		});
-	}
-
 	async function copyLinkToClipboard() {
 		await navigator.clipboard.writeText(page.url.toString());
 		toasts.success({
@@ -319,8 +311,8 @@
 	</div>
 </div>
 
-<div class="flex justify-center mt-8">
+<div class="mt-8 flex justify-center">
 	<div class="w-[90%] space-y-12">
-		<Table ratings={filteredRatings} zapModal={ZapModalComponent}/>
+		<Table ratings={filteredRatings} zapModal={ZapModalComponent} />
 	</div>
 </div>
