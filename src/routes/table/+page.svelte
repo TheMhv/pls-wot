@@ -12,12 +12,12 @@
 	import { npubEncode } from 'nostr-tools/nip19';
 	import { onMount } from 'svelte';
 	import ZapModal from '$lib/components/ZapModal.svelte';
-	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import { Input, Label, Select } from 'flowbite-svelte';
 	import type { Event } from 'nostr-tools';
 	import { page } from '$app/state';
 	import { replaceState } from '$app/navigation';
 	import { toasts } from 'svelte-toasts';
+	import Table from '$lib/components/Table/Table.svelte';
 
 	let ZapModalComponent: ZapModal;
 
@@ -217,329 +217,110 @@
 
 		return download('ratings.json', JSON.stringify(filteredRatingsEvents, null, '\t'));
 	};
-
-	let expandedItems = new Set();
-
-	function toggleExpanded(id) {
-		if (expandedItems.has(id)) {
-			expandedItems.delete(id);
-		} else {
-			expandedItems.add(id);
-		}
-		expandedItems = expandedItems;
-	}
 </script>
 
 <ZapModal bind:this={ZapModalComponent} />
 
-<div class="flex justify-center">
+<div class="flex flex-col items-center gap-8">
+	<h1 class="text-2xl font-bold">Ratings table (Currently using replaceable events)</h1>
+
+	<div class="flex w-full flex-wrap justify-center gap-4">
+		<div class="flex flex-col">
+			<Label for="filterRating" class="font-semibold">Filter by Rating:</Label>
+			<Select
+				id="filterRating"
+				bind:value={filterRating}
+				items={[
+					{ value: 'all', name: 'All' },
+					{ value: 'positive', name: '✅ Positive' },
+					{ value: 'negative', name: '❌ Negative' }
+				]}
+				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+			/>
+		</div>
+
+		<div class="flex flex-col">
+			<Label for="filterBusiness" class="font-semibold">Filter by Had Business:</Label>
+			<Select
+				id="filterBusiness"
+				bind:value={filterBusiness}
+				items={[
+					{ value: 'all', name: 'All' },
+					{ value: 'yes', name: '✅ Yes' },
+					{ value: 'no', name: '❌ No' }
+				]}
+				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+			/>
+		</div>
+
+		<div class="flex flex-col">
+			<Label for="filterFrom" class="font-semibold">Filter by Who Rated:</Label>
+			<Input
+				id="filterFrom"
+				bind:value={filterFrom}
+				placeholder="Enter Rater Key"
+				autocomplete="off"
+				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+			/>
+		</div>
+
+		<div class="flex flex-col">
+			<Label for="filterTo" class="font-semibold">Filter by Who Was Rated:</Label>
+			<Input
+				id="filterTo"
+				bind:value={filterTo}
+				placeholder="Enter Rated Key"
+				autocomplete="off"
+				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+			/>
+		</div>
+
+		<div class="flex flex-col">
+			<label for="downloadReviews" class="font-semibold">Download reviews:</label>
+
+			<div class="flex grid-cols-2 gap-2">
+				<button
+					type="button"
+					class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+					on:click={() => handleDownload()}
+				>
+					From filters
+				</button>
+
+				{#if $nostrAuth?.pubkey}
+					<button
+						type="button"
+						class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+						on:click={() => handleDownload(true)}
+					>
+						All My Reviews
+					</button>
+				{/if}
+			</div>
+		</div>
+
+		<div class="flex flex-col">
+			<label for="getFilterLinks" class="font-semibold">Get filters link:</label>
+
+			<div class="grid-cols flex gap-2">
+				<button
+					type="button"
+					class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+					on:click={() => copyLinkToClipboard()}
+				>
+					Copy to clipboard
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="flex justify-center mt-8">
 	<div class="w-[90%] space-y-12">
-		<div class="text-center">
-			<h1 class="text-2xl font-bold">Ratings table (Currently using replaceable events)</h1>
-		</div>
-
-		<div class="grid w-full grid-cols-12 gap-4">
-			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
-				<Label for="filterRating" class="font-semibold">Filter by Rating:</Label>
-				<Select
-					id="filterRating"
-					bind:value={filterRating}
-					items={[
-						{ value: 'all', name: 'All' },
-						{ value: 'positive', name: '✅ Positive' },
-						{ value: 'negative', name: '❌ Negative' }
-					]}
-					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-				/>
-			</div>
-	
-			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
-				<Label for="filterBusiness" class="font-semibold">Filter by Had Business:</Label>
-				<Select
-					id="filterBusiness"
-					bind:value={filterBusiness}
-					items={[
-						{ value: 'all', name: 'All' },
-						{ value: 'yes', name: '✅ Yes' },
-						{ value: 'no', name: '❌ No' }
-					]}
-					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-				/>
-			</div>
-	
-			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
-				<Label for="filterFrom" class="font-semibold">Filter by Who Rated:</Label>
-				<Input
-					id="filterFrom"
-					bind:value={filterFrom}
-					placeholder="Enter Rater Key"
-					autocomplete="off"
-					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-				/>
-			</div>
-	
-			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
-				<Label for="filterTo" class="font-semibold">Filter by Who Was Rated:</Label>
-				<Input
-					id="filterTo"
-					bind:value={filterTo}
-					placeholder="Enter Rated Key"
-					autocomplete="off"
-					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-				/>
-			</div>
-	
-			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
-				<label for="downloadReviews" class="font-semibold">Download reviews:</label>
-	
-				<div class="flex grid-cols-2 gap-2">
-					<button
-						type="button"
-						class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-						on:click={() => handleDownload()}
-					>
-						From filters
-					</button>
-	
-					{#if $nostrAuth?.pubkey}
-						<button
-							type="button"
-							class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-							on:click={() => handleDownload(true)}
-						>
-							All My Reviews
-						</button>
-					{/if}
-				</div>
-			</div>
-	
-			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
-				<label for="getFilterLinks" class="font-semibold">Get filters link:</label>
-	
-				<div class="grid-cols flex gap-2">
-					<button
-						type="button"
-						class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-						on:click={() => copyLinkToClipboard()}
-					>
-						Copy to clipboard
-					</button>
-				</div>
-			</div>
-		</div>
-	
-		<table class="min-w-full">
-		<thead>
-			<tr>
-				<th
-					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
-				>
-					Rater
-				</th>
-				<th
-					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
-				>
-					Rated
-				</th>
-				<th
-					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
-				>
-					Rating
-				</th>
-				<th
-					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
-				>
-					Has <br /> Business
-				</th>
-				<th class="border-b border-gray-200 bg-slate-700 px-6 py-3"></th>
-			</tr>
-		</thead>
-	
-		<tbody>
-			<tr class="border-x border-y-0">
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<div class="flex items-center">
-						<div class="h-10 w-10 flex-shrink-0">
-							<a
-								href="https://njump.me/npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz"
-								target="_blank"
-								class="h-full w-full"
-							>
-								<ProfileAvatar source="https://avatars.githubusercontent.com/u/25031483" />
-							</a>
-						</div>
-	
-						<div class="ml-4">
-							<div class="text-sm font-medium leading-5 text-gray-200">TheMhv</div>
-	
-							<div class="group relative text-sm leading-5 text-gray-500">
-								<button
-									on:click={() =>
-										copyNpub('npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz')}
-								>
-									{`${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(0, 5)}...${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(-5)}`}
-								</button>
-	
-								<span
-									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
-								>
-									npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz
-								</span>
-							</div>
-						</div>
-					</div>
-				</td>
-	
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<div class="flex items-center">
-						<div class="h-10 w-10 flex-shrink-0">
-							<a
-								href="https://njump.me/npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc"
-								target="_blank"
-								class="h-full w-full"
-							>
-								<ProfileAvatar
-									source="https://blossom.primal.net/24242d039c11a10b61d3f5cbf8e4e771a5d7342c92a65e4440d267cbb5b1be9a.png"
-								/>
-							</a>
-						</div>
-	
-						<div class="ml-4">
-							<div class="text-sm font-medium leading-5 text-gray-200">Daniel Smith</div>
-	
-							<div class="group relative text-sm leading-5 text-gray-500">
-								<button
-									on:click={() =>
-										copyNpub('npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc')}
-								>
-									{`${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(0, 5)}...${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(-5)}`}
-								</button>
-	
-								<span
-									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
-								>
-									npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc
-								</span>
-							</div>
-						</div>
-					</div>
-				</td>
-	
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<span
-						class="inline-flex text-nowrap rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
-						>✅ Positive</span
-					>
-				</td>
-	
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<span
-						class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
-						>✅ Yes</span
-					>
-				</td>
-	
-				<td
-					class="whitespace-no-wrap border-b border-gray-200 px-6 py-4 text-right text-sm font-medium leading-5"
-				>
-					<a href="#" class="text-indigo-600 hover:text-indigo-900">Show More</a>
-				</td>
-			</tr>
-
-			<tr class="border-x border-y-0">
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<div class="flex items-center">
-						<div class="h-10 w-10 flex-shrink-0">
-							<a
-								href="https://njump.me/npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz"
-								target="_blank"
-								class="h-full w-full"
-							>
-								<ProfileAvatar source="https://avatars.githubusercontent.com/u/25031483" />
-							</a>
-						</div>
-	
-						<div class="ml-4">
-							<div class="text-sm font-medium leading-5 text-gray-200">TheMhv</div>
-	
-							<div class="group relative text-sm leading-5 text-gray-500">
-								<button
-									on:click={() =>
-										copyNpub('npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz')}
-								>
-									{`${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(0, 5)}...${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(-5)}`}
-								</button>
-	
-								<span
-									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
-								>
-									npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz
-								</span>
-							</div>
-						</div>
-					</div>
-				</td>
-	
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<div class="flex items-center">
-						<div class="h-10 w-10 flex-shrink-0">
-							<a
-								href="https://njump.me/npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc"
-								target="_blank"
-								class="h-full w-full"
-							>
-								<ProfileAvatar
-									source="https://blossom.primal.net/24242d039c11a10b61d3f5cbf8e4e771a5d7342c92a65e4440d267cbb5b1be9a.png"
-								/>
-							</a>
-						</div>
-	
-						<div class="ml-4">
-							<div class="text-sm font-medium leading-5 text-gray-200">Daniel Smith</div>
-	
-							<div class="group relative text-sm leading-5 text-gray-500">
-								<button
-									on:click={() =>
-										copyNpub('npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc')}
-								>
-									{`${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(0, 5)}...${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(-5)}`}
-								</button>
-	
-								<span
-									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
-								>
-									npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc
-								</span>
-							</div>
-						</div>
-					</div>
-				</td>
-	
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<span
-						class="inline-flex text-nowrap rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
-						>✅ Positive</span
-					>
-				</td>
-	
-				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
-					<span
-						class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
-						>✅ Yes</span
-					>
-				</td>
-	
-				<td
-					class="whitespace-no-wrap border-b border-gray-200 px-6 py-4 text-right text-sm font-medium leading-5"
-				>
-					<a href="#" class="text-indigo-600 hover:text-indigo-900">Show More</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+		<Table ratings={filteredRatings} zapModal={ZapModalComponent}/>
 	</div>
 </div>
