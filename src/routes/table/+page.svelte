@@ -213,11 +213,11 @@
 
 <ZapModal bind:this={ZapModalComponent} />
 
-<div class="w-full px-[5%] space-y-8">
+<div class="w-full md:px-[5%] space-y-8">
 	<h1 class="text-2xl font-bold text-center">Ratings table (Currently using replaceable events)</h1>
 
-	<div class="flex w-full flex-wrap justify-center gap-4">
-		<div class="flex flex-col">
+	<div class="grid grid-cols-12 justify-center gap-4 px-[5%] md:px-0">
+		<div class="col-span-12 sm:col-span-6 xl:col-span-2">
 			<Label for="filterRating" class="font-semibold">Filter by Rating:</Label>
 			<Select
 				id="filterRating"
@@ -232,7 +232,7 @@
 			/>
 		</div>
 
-		<div class="flex flex-col">
+		<div class="col-span-12 sm:col-span-6 xl:col-span-2">
 			<Label for="filterBusiness" class="font-semibold">Filter by Had Business:</Label>
 			<Select
 				id="filterBusiness"
@@ -247,7 +247,7 @@
 			/>
 		</div>
 
-		<div class="flex flex-col">
+		<div class="col-span-12 sm:col-span-6 xl:col-span-2">
 			<Label for="filterFrom" class="font-semibold">Filter by Who Rated:</Label>
 			<Input
 				id="filterFrom"
@@ -259,7 +259,7 @@
 			/>
 		</div>
 
-		<div class="flex flex-col">
+		<div class="col-span-12 sm:col-span-6 xl:col-span-2">
 			<Label for="filterTo" class="font-semibold">Filter by Who Was Rated:</Label>
 			<Input
 				id="filterTo"
@@ -271,7 +271,7 @@
 			/>
 		</div>
 
-		<div class="flex flex-col">
+		<div class="col-span-6 xl:col-span-2">
 			<label for="downloadReviews" class="font-semibold">Download reviews:</label>
 
 			<div class="flex grid-cols-2 gap-2">
@@ -295,7 +295,7 @@
 			</div>
 		</div>
 
-		<div class="flex flex-col">
+		<div class="col-span-6 xl:col-span-2">
 			<label for="getFilterLinks" class="font-semibold">Get filters link:</label>
 
 			<div class="grid-cols flex gap-2">
