@@ -235,96 +235,98 @@
 <div class="flex flex-col items-center gap-8">
 	<h1 class="text-2xl font-bold">Ratings table (Currently using replaceable events)</h1>
 
-	<div class="flex w-full flex-wrap justify-center gap-4">
-		<div class="flex flex-col">
-			<Label for="filterRating" class="font-semibold">Filter by Rating:</Label>
-			<Select
-				id="filterRating"
-				bind:value={filterRating}
-				items={[
-					{ value: 'all', name: 'All' },
-					{ value: 'positive', name: '✅ Positive' },
-					{ value: 'negative', name: '❌ Negative' }
-				]}
-				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-			/>
-		</div>
+	<div class="w-full md:max-w-xl">
+		<div class="grid w-full gap-4 grid-cols-12">
+			<div class="col-span-12 md:col-span-6">
+				<Label for="filterRating" class="font-semibold">Filter by Rating:</Label>
+				<Select
+					id="filterRating"
+					bind:value={filterRating}
+					items={[
+						{ value: 'all', name: 'All' },
+						{ value: 'positive', name: '✅ Positive' },
+						{ value: 'negative', name: '❌ Negative' }
+					]}
+					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+				/>
+			</div>
 
-		<div class="flex flex-col">
-			<Label for="filterBusiness" class="font-semibold">Filter by Had Business:</Label>
-			<Select
-				id="filterBusiness"
-				bind:value={filterBusiness}
-				items={[
-					{ value: 'all', name: 'All' },
-					{ value: 'yes', name: '✅ Yes' },
-					{ value: 'no', name: '❌ No' }
-				]}
-				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-			/>
-		</div>
+			<div class="col-span-12 md:col-span-6">
+				<Label for="filterBusiness" class="font-semibold">Filter by Had Business:</Label>
+				<Select
+					id="filterBusiness"
+					bind:value={filterBusiness}
+					items={[
+						{ value: 'all', name: 'All' },
+						{ value: 'yes', name: '✅ Yes' },
+						{ value: 'no', name: '❌ No' }
+					]}
+					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+				/>
+			</div>
 
-		<div class="flex flex-col">
-			<Label for="filterFrom" class="font-semibold">Filter by Who Rated:</Label>
-			<Input
-				id="filterFrom"
-				bind:value={filterFrom}
-				placeholder="Enter Rater Key"
-				autocomplete="off"
-				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-			/>
-		</div>
+			<div class="col-span-12 md:col-span-6">
+				<Label for="filterFrom" class="font-semibold">Filter by Who Rated:</Label>
+				<Input
+					id="filterFrom"
+					bind:value={filterFrom}
+					placeholder="Enter Rater Key"
+					autocomplete="off"
+					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+				/>
+			</div>
 
-		<div class="flex flex-col">
-			<Label for="filterTo" class="font-semibold">Filter by Who Was Rated:</Label>
-			<Input
-				id="filterTo"
-				bind:value={filterTo}
-				placeholder="Enter Rated Key"
-				autocomplete="off"
-				class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-				       transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-			/>
-		</div>
+			<div class="col-span-12 md:col-span-6">
+				<Label for="filterTo" class="font-semibold">Filter by Who Was Rated:</Label>
+				<Input
+					id="filterTo"
+					bind:value={filterTo}
+					placeholder="Enter Rated Key"
+					autocomplete="off"
+					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
+							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+				/>
+			</div>
 
-		<div class="flex flex-col">
-			<label for="downloadReviews" class="font-semibold">Download reviews:</label>
+			<div class="col-span-12 md:col-span-6">
+				<label for="downloadReviews" class="font-semibold">Download reviews:</label>
 
-			<div class="flex grid-cols-2 gap-2">
-				<button
-					type="button"
-					class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-					on:click={() => handleDownload()}
-				>
-					From filters
-				</button>
-
-				{#if $nostrAuth?.pubkey}
+				<div class="flex grid-cols-2 gap-2">
 					<button
 						type="button"
 						class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-						on:click={() => handleDownload(true)}
+						on:click={() => handleDownload()}
 					>
-						All My Reviews
+						From filters
 					</button>
-				{/if}
+
+					{#if $nostrAuth?.pubkey}
+						<button
+							type="button"
+							class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+							on:click={() => handleDownload(true)}
+						>
+							All My Reviews
+						</button>
+					{/if}
+				</div>
 			</div>
-		</div>
 
-		<div class="flex flex-col">
-			<label for="getFilterLinks" class="font-semibold">Get filters link:</label>
+			<div class="col-span-12 md:col-span-6">
+				<label for="getFilterLinks" class="font-semibold">Get filters link:</label>
 
-			<div class="grid-cols flex gap-2">
-				<button
-					type="button"
-					class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-					on:click={() => copyLinkToClipboard()}
-				>
-					Copy to clipboard
-				</button>
+				<div class="grid-cols flex gap-2">
+					<button
+						type="button"
+						class="rounded border border-gray-600 bg-gray-700 px-2 py-1 text-white transition-colors hover:bg-orange-600 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+						on:click={() => copyLinkToClipboard()}
+					>
+						Copy to clipboard
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
