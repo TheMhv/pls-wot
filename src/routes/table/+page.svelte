@@ -235,9 +235,9 @@
 <div class="flex flex-col items-center gap-8">
 	<h1 class="text-2xl font-bold">Ratings table (Currently using replaceable events)</h1>
 
-	<div class="w-full md:max-w-xl">
+	<div class="w-[90%]">
 		<div class="grid w-full gap-4 grid-cols-12">
-			<div class="col-span-12 md:col-span-6">
+			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterRating" class="font-semibold">Filter by Rating:</Label>
 				<Select
 					id="filterRating"
@@ -252,7 +252,7 @@
 				/>
 			</div>
 
-			<div class="col-span-12 md:col-span-6">
+			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterBusiness" class="font-semibold">Filter by Had Business:</Label>
 				<Select
 					id="filterBusiness"
@@ -267,7 +267,7 @@
 				/>
 			</div>
 
-			<div class="col-span-12 md:col-span-6">
+			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterFrom" class="font-semibold">Filter by Who Rated:</Label>
 				<Input
 					id="filterFrom"
@@ -279,7 +279,7 @@
 				/>
 			</div>
 
-			<div class="col-span-12 md:col-span-6">
+			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterTo" class="font-semibold">Filter by Who Was Rated:</Label>
 				<Input
 					id="filterTo"
@@ -291,7 +291,7 @@
 				/>
 			</div>
 
-			<div class="col-span-12 md:col-span-6">
+			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<label for="downloadReviews" class="font-semibold">Download reviews:</label>
 
 				<div class="flex grid-cols-2 gap-2">
@@ -315,7 +315,7 @@
 				</div>
 			</div>
 
-			<div class="col-span-12 md:col-span-6">
+			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<label for="getFilterLinks" class="font-semibold">Get filters link:</label>
 
 				<div class="grid-cols flex gap-2">
@@ -333,7 +333,7 @@
 
 	<table class="w-3/4">
 		<thead>
-			<tr>
+			<tr class="">
 				<th>Rater Nostr Key</th>
 				<th>Rated Nostr Key</th>
 				<th>Date</th>
