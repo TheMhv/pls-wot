@@ -213,8 +213,8 @@
 
 <ZapModal bind:this={ZapModalComponent} />
 
-<div class="flex flex-col items-center gap-8">
-	<h1 class="text-2xl font-bold">Ratings table (Currently using replaceable events)</h1>
+<div class="w-full px-[5%] space-y-8">
+	<h1 class="text-2xl font-bold text-center">Ratings table (Currently using replaceable events)</h1>
 
 	<div class="flex w-full flex-wrap justify-center gap-4">
 		<div class="flex flex-col">
@@ -309,10 +309,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="mt-8 flex justify-center">
-	<div class="w-[90%] space-y-12">
-		<Table ratings={filteredRatings} zapModal={ZapModalComponent} />
-	</div>
+	<Table ratings={filteredRatings} zapModal={ZapModalComponent} />
 </div>
