@@ -232,11 +232,13 @@
 
 <ZapModal bind:this={ZapModalComponent} />
 
-<div class="flex flex-col items-center gap-8">
-	<h1 class="text-2xl font-bold">Ratings table (Currently using replaceable events)</h1>
+<div class="flex justify-center">
+	<div class="w-[90%] space-y-12">
+		<div class="text-center">
+			<h1 class="text-2xl font-bold">Ratings table (Currently using replaceable events)</h1>
+		</div>
 
-	<div class="w-[90%]">
-		<div class="grid w-full gap-4 grid-cols-12">
+		<div class="grid w-full grid-cols-12 gap-4">
 			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterRating" class="font-semibold">Filter by Rating:</Label>
 				<Select
@@ -248,10 +250,10 @@
 						{ value: 'negative', name: '❌ Negative' }
 					]}
 					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
 				/>
 			</div>
-
+	
 			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterBusiness" class="font-semibold">Filter by Had Business:</Label>
 				<Select
@@ -263,10 +265,10 @@
 						{ value: 'no', name: '❌ No' }
 					]}
 					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
 				/>
 			</div>
-
+	
 			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterFrom" class="font-semibold">Filter by Who Rated:</Label>
 				<Input
@@ -275,10 +277,10 @@
 					placeholder="Enter Rater Key"
 					autocomplete="off"
 					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
 				/>
 			</div>
-
+	
 			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<Label for="filterTo" class="font-semibold">Filter by Who Was Rated:</Label>
 				<Input
@@ -287,13 +289,13 @@
 					placeholder="Enter Rated Key"
 					autocomplete="off"
 					class="rounded border border-gray-300 bg-white px-2 py-1 text-black
-							transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+								transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
 				/>
 			</div>
-
+	
 			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<label for="downloadReviews" class="font-semibold">Download reviews:</label>
-
+	
 				<div class="flex grid-cols-2 gap-2">
 					<button
 						type="button"
@@ -302,7 +304,7 @@
 					>
 						From filters
 					</button>
-
+	
 					{#if $nostrAuth?.pubkey}
 						<button
 							type="button"
@@ -314,10 +316,10 @@
 					{/if}
 				</div>
 			</div>
-
+	
 			<div class="col-span-12 md:col-span-6 2xl:col-span-2">
 				<label for="getFilterLinks" class="font-semibold">Get filters link:</label>
-
+	
 				<div class="grid-cols flex gap-2">
 					<button
 						type="button"
@@ -329,120 +331,215 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<table class="w-3/4">
+	
+		<table class="min-w-full">
 		<thead>
-			<tr class="">
-				<th>Rater Nostr Key</th>
-				<th>Rated Nostr Key</th>
-				<th>Date</th>
-				<th>Rating</th>
-				<th>Had <br /> business</th>
-				<th>Description</th>
-				<th>Zap</th>
+			<tr>
+				<th
+					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
+				>
+					Rater
+				</th>
+				<th
+					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
+				>
+					Rated
+				</th>
+				<th
+					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
+				>
+					Rating
+				</th>
+				<th
+					class="border-b border-gray-200 bg-slate-700 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
+				>
+					Has <br /> Business
+				</th>
+				<th class="border-b border-gray-200 bg-slate-700 px-6 py-3"></th>
 			</tr>
 		</thead>
+	
 		<tbody>
-			{#each filteredRatings as rating}
-				<tr>
-					<td>
-						<div class="flex items-center gap-4 px-2">
-							<a href="https://njump.me/{rating.from.npub}" target="_blank" class="h-full w-full">
-								<ProfileAvatar source={rating.from.picture} />
+			<tr class="border-x border-y-0">
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<div class="flex items-center">
+						<div class="h-10 w-10 flex-shrink-0">
+							<a
+								href="https://njump.me/npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz"
+								target="_blank"
+								class="h-full w-full"
+							>
+								<ProfileAvatar source="https://avatars.githubusercontent.com/u/25031483" />
 							</a>
-							<div class="font-medium text-white">
-								<div>{rating.from.display_name || rating.from.name || ''}</div>
-								<div class="group relative">
-									<button on:click={() => copyNpub(rating.from.npub)}>
-										<span class="block max-w-24 text-sm text-gray-400">
-											{`${rating.from.npub.slice(0, 5)}...${rating.from.npub.slice(-5)}`}
-										</span>
-									</button>
-
-									<span
-										class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
-									>
-										{rating.from.npub}
-									</span>
-								</div>
+						</div>
+	
+						<div class="ml-4">
+							<div class="text-sm font-medium leading-5 text-gray-200">TheMhv</div>
+	
+							<div class="group relative text-sm leading-5 text-gray-500">
+								<button
+									on:click={() =>
+										copyNpub('npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz')}
+								>
+									{`${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(0, 5)}...${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(-5)}`}
+								</button>
+	
+								<span
+									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
+								>
+									npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz
+								</span>
 							</div>
 						</div>
-					</td>
-					<td>
-						<div class="flex items-center gap-4 px-2">
-							<a href="https://njump.me/{rating.to.npub}" target="_blank" class="h-full w-full">
-								<ProfileAvatar source={rating.to.picture} />
+					</div>
+				</td>
+	
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<div class="flex items-center">
+						<div class="h-10 w-10 flex-shrink-0">
+							<a
+								href="https://njump.me/npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc"
+								target="_blank"
+								class="h-full w-full"
+							>
+								<ProfileAvatar
+									source="https://blossom.primal.net/24242d039c11a10b61d3f5cbf8e4e771a5d7342c92a65e4440d267cbb5b1be9a.png"
+								/>
 							</a>
-
-							<div class="font-medium text-white">
-								<div>{rating.to.display_name || rating.to.name || ''}</div>
-
-								<div class="group relative">
-									<button on:click={() => copyNpub(rating.to.npub)}>
-										<span class="block max-w-24 text-sm text-gray-400">
-											{`${rating.to.npub.slice(0, 5)}...${rating.to.npub.slice(-5)}`}
-										</span>
-									</button>
-
-									<span
-										class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
-									>
-										{rating.to.npub}
-									</span>
-								</div>
+						</div>
+	
+						<div class="ml-4">
+							<div class="text-sm font-medium leading-5 text-gray-200">Daniel Smith</div>
+	
+							<div class="group relative text-sm leading-5 text-gray-500">
+								<button
+									on:click={() =>
+										copyNpub('npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc')}
+								>
+									{`${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(0, 5)}...${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(-5)}`}
+								</button>
+	
+								<span
+									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
+								>
+									npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc
+								</span>
 							</div>
 						</div>
-					</td>
-					<td>
-						{new Date(rating.date).toLocaleDateString()}
-						<br />
-						{new Date(rating.date).toLocaleTimeString()}
-					</td>
-					<td>{rating.score ? '✅' : '❌'}</td>
-					<td>{rating.businessAlreadyDone ? '✅' : '❌'}</td>
-					<td class="max-w-xl">
-						<div class="break-words">
-							<span class={expandedItems.has(rating.eventId) ? '' : 'line-clamp-3'}>
-								{rating.description}
-							</span>
-							{#if rating.description.length > 250}
-								<button
-									on:click={() => toggleExpanded(rating.eventId)}
-									class="ml-1 text-sm text-orange-500 hover:text-white"
-								>
-									{expandedItems.has(rating.eventId) ? 'Show less' : 'Show more'}
-								</button>
-							{/if}
+					</div>
+				</td>
+	
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<span
+						class="inline-flex text-nowrap rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
+						>✅ Positive</span
+					>
+				</td>
+	
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<span
+						class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
+						>✅ Yes</span
+					>
+				</td>
+	
+				<td
+					class="whitespace-no-wrap border-b border-gray-200 px-6 py-4 text-right text-sm font-medium leading-5"
+				>
+					<a href="#" class="text-indigo-600 hover:text-indigo-900">Show More</a>
+				</td>
+			</tr>
+
+			<tr class="border-x border-y-0">
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<div class="flex items-center">
+						<div class="h-10 w-10 flex-shrink-0">
+							<a
+								href="https://njump.me/npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz"
+								target="_blank"
+								class="h-full w-full"
+							>
+								<ProfileAvatar source="https://avatars.githubusercontent.com/u/25031483" />
+							</a>
 						</div>
-					</td>
-					<td>
-						{#if rating.from.lud16}
-							<div class="p-2">
+	
+						<div class="ml-4">
+							<div class="text-sm font-medium leading-5 text-gray-200">TheMhv</div>
+	
+							<div class="group relative text-sm leading-5 text-gray-500">
 								<button
-									type="button"
-									class="rounded-lg p-2.5 text-sm text-orange-500 transition-colors hover:bg-orange-600 hover:text-white focus:ring-2 focus:ring-orange-300"
-									on:click={() => ZapModalComponent.openModal(rating.from.npub, rating.eventId)}
+									on:click={() =>
+										copyNpub('npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz')}
 								>
-									Send Zap
+									{`${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(0, 5)}...${'npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz'.slice(-5)}`}
 								</button>
+	
+								<span
+									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
+								>
+									npub1v3ps5nhexd9fdur4gz82xgc3jmhqwduqhrhy7lwtmm727m086u5sqnuvcz
+								</span>
 							</div>
-						{/if}
-					</td>
-				</tr>
-			{/each}
+						</div>
+					</div>
+				</td>
+	
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<div class="flex items-center">
+						<div class="h-10 w-10 flex-shrink-0">
+							<a
+								href="https://njump.me/npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc"
+								target="_blank"
+								class="h-full w-full"
+							>
+								<ProfileAvatar
+									source="https://blossom.primal.net/24242d039c11a10b61d3f5cbf8e4e771a5d7342c92a65e4440d267cbb5b1be9a.png"
+								/>
+							</a>
+						</div>
+	
+						<div class="ml-4">
+							<div class="text-sm font-medium leading-5 text-gray-200">Daniel Smith</div>
+	
+							<div class="group relative text-sm leading-5 text-gray-500">
+								<button
+									on:click={() =>
+										copyNpub('npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc')}
+								>
+									{`${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(0, 5)}...${'npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc'.slice(-5)}`}
+								</button>
+	
+								<span
+									class="absolute left-0 top-full z-10 hidden whitespace-nowrap rounded-md border border-white bg-gray-800 p-2 text-sm text-white group-hover:block"
+								>
+									npub1erkyl33ttzjpxznpra9f3r3xhaafnrpufhsctur26hyydfy8vlasm9u8qc
+								</span>
+							</div>
+						</div>
+					</div>
+				</td>
+	
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<span
+						class="inline-flex text-nowrap rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
+						>✅ Positive</span
+					>
+				</td>
+	
+				<td class="whitespace-no-wrap border-b border-gray-200 px-6 py-4">
+					<span
+						class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
+						>✅ Yes</span
+					>
+				</td>
+	
+				<td
+					class="whitespace-no-wrap border-b border-gray-200 px-6 py-4 text-right text-sm font-medium leading-5"
+				>
+					<a href="#" class="text-indigo-600 hover:text-indigo-900">Show More</a>
+				</td>
+			</tr>
 		</tbody>
 	</table>
+	</div>
 </div>
-
-<style lang="postcss">
-	table,
-	th,
-	td {
-		@apply border;
-	}
-
-	td {
-		@apply text-center;
-	}
-</style>
