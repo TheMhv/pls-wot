@@ -8,7 +8,7 @@
     export let zapModal: ZapModal;
 </script>
 
-<table class="min-w-full">
+<!-- <table class="min-w-full">
 	<Head />
 
 	<tbody>
@@ -16,4 +16,12 @@
             <Row rating={rating} zapModal={zapModal}/>
         {/each}
 	</tbody>
-</table>
+</table> -->
+
+<div class="w-full">
+	<Head/>
+
+	{#each ratings as rating}
+		<Row rating={rating} zapModal={zapModal}/>
+	{/each}
+</div>
