@@ -17,10 +17,19 @@
 	}
 
 	let textarea: HTMLTextAreaElement;
-	function toggleExpanded() {
-		expanded = !expanded;
+	let showAllDescription: boolean = false;
+	let showAllButton: boolean = false;
+	
+	$: if (textarea) {
+        if (textarea?.offsetHeight !== textarea?.scrollHeight) {
+			showAllButton = true;
+		}
+    }
+
+	function toggleDescription() {
+		showAllDescription = !showAllDescription;
 		if (!textarea) return;
-		textarea.style.height = expanded ? textarea.scrollHeight + 'px' : 'auto';
+		textarea.style.height = showAllDescription ? textarea.scrollHeight + 'px' : 'auto';
 	}
 </script>
 
@@ -174,12 +183,12 @@
 					>
 						Description
 
-						{#if rating.description.length > 250}
+						{#if showAllButton}
 							<button
 								class="ml-4 text-sm text-orange-500 hover:text-white"
-								on:click={toggleExpanded}
+								on:click={toggleDescription}
 							>
-								{expanded ? 'Show Less' : 'Show All'}
+								{showAllDescription ? 'Show Less' : 'Show All'}
 							</button>
 						{/if}
 					</div>
