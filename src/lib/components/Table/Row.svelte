@@ -177,30 +177,33 @@
 
 		{#if rating.description}
 			<div class="col-span-12 flex items-center xl:col-span-8">
-				<div class="w-full px-6 py-4">
+				<div class="flex items-center gap-4 w-full px-6 pb-4">
 					<div
-						class="pb-2 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
+						class="text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-200"
 					>
 						Description
+					</div>
+
+					<div class="flex gap-4 w-full bg-slate-700">
+						<textarea
+							bind:this={textarea}
+							bind:value={rating.description}
+							class="w-full resize-none border-0"
+							rows="1"
+							readonly
+							disabled
+						></textarea>
 
 						{#if showAllButton}
 							<button
-								class="ml-4 text-sm text-orange-500 hover:text-white"
+								type="button"
+								class="text-nowrap text-sm text-orange-500 hover:text-white p-2.5 h-full"
 								on:click={toggleDescription}
 							>
 								{showAllDescription ? 'Show Less' : 'Show All'}
 							</button>
 						{/if}
 					</div>
-
-					<textarea
-						bind:this={textarea}
-						bind:value={rating.description}
-						class="w-full resize-none border-0 bg-slate-700"
-						rows="2"
-						readonly
-						disabled
-					></textarea>
 				</div>
 			</div>
 		{/if}
