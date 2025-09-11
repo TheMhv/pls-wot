@@ -126,8 +126,8 @@
 					>
 				{:else}
 					<span
-						class="inline-flex text-nowrap rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800"
-						>❌ No</span
+						class="inline-flex text-nowrap rounded-full bg-gray-500 px-2 text-xs font-semibold leading-5 text-gray-200"
+						>▫️ No</span
 					>
 				{/if}
 			</div>
